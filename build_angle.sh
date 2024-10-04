@@ -37,6 +37,7 @@ do
         rm -rf "out/Release_${arch}"
         mkdir -p "out/Release_${arch}"
         
+        # we remove as much as we can from the build to save space for the space-limited CI machines
         cat << EOF > "out/Release_${arch}/args.gn"
 target_cpu = "${arch}"
 is_debug = false
@@ -46,6 +47,8 @@ build_angle_deqp_tests = false
 build_angle_perftests = false
 angle_enable_vulkan = false
 angle_enable_wgpu = false
+angle_enable_abseil = false
+angle_enable_gl_null = false
 EOF
 
         gn gen "out/Release_${arch}"
