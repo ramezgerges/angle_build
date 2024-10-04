@@ -19,7 +19,12 @@ if [ ! -f angle_source/angle_fetched_successfully ]; then
     rm -rf angle_source
     mkdir angle_source
     cd angle_source
-    fetch angle
+    fetch angle --no-history
+
+    # remove unnecessary dirs for space
+    rm -rf third_party/dawn third_party/VK-GL-CTS
+    find ./tools ./third_party -name "*.git" | xargs rm -rf
+
     touch angle_fetched_successfully
 else
     cd angle_source
@@ -36,6 +41,11 @@ do
 target_cpu = "${arch}"
 is_debug = false
 angle_assert_always_on = true
+angle_build_tests = false
+build_angle_deqp_tests = false
+build_angle_perftests = false
+angle_enable_vulkan = false
+angle_enable_wgpu = false
 EOF
 
         gn gen "out/Release_${arch}"
@@ -51,7 +61,9 @@ popd > /dev/null
 mkdir -p angle_binaries/osx
 
 # create universal mac binaries
-for lib in libEGL.dylib libGLESv2.dylib
+shopt -s nullglob
+for lib in libEGL.* libGLESv2.*
 do
     lipo -create angle/angle_source/out/Release_arm64/${lib} angle/angle_source/out/Release_x64/${lib} -output angle_binaries/osx/${lib}
 done
+shopt -u nullglob
