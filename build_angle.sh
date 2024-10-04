@@ -48,7 +48,8 @@ build_angle_perftests = false
 angle_enable_vulkan = false
 angle_enable_wgpu = false
 angle_enable_abseil = false
-angle_enable_gl_null = false
+angle_enable_null = false
+angle_enable_gl = false
 EOF
 
         gn gen "out/Release_${arch}"

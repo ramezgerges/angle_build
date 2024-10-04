@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Check Space
-        run: df -h
+        run: uname -p && df -h
 
       - uses: actions/checkout@v4
 
