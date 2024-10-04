@@ -19,7 +19,7 @@ if [ ! -f angle_source/angle_fetched_successfully ]; then
     rm -rf angle_source
     mkdir angle_source
     cd angle_source
-    fetch angle --no-history
+    fetch --no-history angle
 
     # remove unnecessary dirs for space
     rm -rf third_party/dawn third_party/VK-GL-CTS
